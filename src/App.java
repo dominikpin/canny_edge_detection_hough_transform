@@ -9,7 +9,7 @@ import javax.imageio.ImageIO;
 import logic.GaussianFilter;
 import logic.CannyEdge;
 import logic.GrayScale;
-import logic.SaveImage;
+import logic.HoughLineTransform;
 
 public class App {
 
@@ -18,7 +18,7 @@ public class App {
     public static void main(String[] args) {
         BufferedImage image = null;
         try {
-            image = ImageIO.read(new File("sudoku.png"));
+            image = ImageIO.read(new File("input.png"));
         } catch (IOException e) {
         }
 
@@ -29,11 +29,12 @@ public class App {
         scaledImage = ato.filter(image, scaledImage);
 
         BufferedImage grayImage = GrayScale.applyGrayScale(scaledImage, GrayScale.AVERAGE);
-        SaveImage.saveImage(grayImage, "grayscale");
 
         BufferedImage blurredImage = GaussianFilter.applyGaussianFilter(grayImage, GaussianFilter.KERNEL5x5);
-        SaveImage.saveImage(blurredImage, "blurred");
 
-        CannyEdge.getCannyEdge(blurredImage, CannyEdge.SOBEL, CannyEdge.PRESET_ALPHA, CannyEdge.PRESET_BETA);
+        BufferedImage cannyEdge = CannyEdge.getCannyEdge(blurredImage, CannyEdge.SOBEL, CannyEdge.PRESET_ALPHA,
+                CannyEdge.PRESET_BETA);
+
+        HoughLineTransform.getLines(cannyEdge);
     }
 }

@@ -53,6 +53,7 @@ public class GaussianFilter {
                 blurredImage.setRGB(j - offset, i - offset, gaussianPixel);
             }
         }
+        SaveImage.saveImage(blurredImage, "blurred");
         return blurredImage;
     }
 }

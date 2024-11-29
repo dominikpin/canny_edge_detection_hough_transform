@@ -35,6 +35,7 @@ public class GrayScale {
                 grayImage.setRGB(j, i, pixel);
             }
         }
+        SaveImage.saveImage(grayImage, "grayscale");
         return grayImage;
     }
 }

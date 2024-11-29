@@ -23,7 +23,7 @@ public class CannyEdge {
     public static final double PRESET_ALPHA = 0.3;
     public static final double PRESET_BETA = 0.5;
 
-    public static void getCannyEdge(BufferedImage image, int[][] filter, double alpha, double beta) {
+    public static BufferedImage getCannyEdge(BufferedImage image, int[][] filter, double alpha, double beta) {
         int width = image.getWidth();
         int height = image.getHeight();
         double[][] angleTable = new double[height][width];
@@ -32,6 +32,7 @@ public class CannyEdge {
         BufferedImage cannyEdge = makeCannyEdge(gradientImage, angleTable);
 
         hysteresisThreshold(cannyEdge, maxGradient, alpha, beta);
+        return cannyEdge;
     }
 
     public static BufferedImage calculateGradientAndAngle(BufferedImage image, int[][] filter, double[][] angleTable,
