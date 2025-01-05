@@ -7,7 +7,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import logic.GaussianFilter;
-import logic.CannyEdge;
+import logic.EdgeDetection;
 import logic.GrayScale;
 import logic.HoughLineTransform;
 
@@ -18,7 +18,7 @@ public class App {
     public static void main(String[] args) {
         BufferedImage image = null;
         try {
-            image = ImageIO.read(new File("input.png"));
+            image = ImageIO.read(new File("input1.png"));
         } catch (IOException e) {
         }
 
@@ -30,11 +30,16 @@ public class App {
 
         BufferedImage grayImage = GrayScale.applyGrayScale(scaledImage, GrayScale.AVERAGE);
 
-        BufferedImage blurredImage = GaussianFilter.applyGaussianFilter(grayImage, GaussianFilter.KERNEL5x5);
+        BufferedImage blurredImage = GaussianFilter.applyGaussianFilter(grayImage, GaussianFilter.KERNEL3x3);
 
-        BufferedImage cannyEdge = CannyEdge.getCannyEdge(blurredImage, CannyEdge.SOBEL, CannyEdge.PRESET_ALPHA,
-                CannyEdge.PRESET_BETA);
+        BufferedImage thresholdGradientImage = EdgeDetection.getThresholdGradient(blurredImage, EdgeDetection.SOBEL,
+                EdgeDetection.PRESET_ALPHA, EdgeDetection.PRESET_BETA);
 
-        HoughLineTransform.getLines(cannyEdge);
+        for (int[] coordinates : HoughLineTransform.getLines(thresholdGradientImage)) {
+            for (int coordinate : coordinates) {
+                System.out.print(coordinate + " ");
+            }
+            System.out.println();
+        }
     }
 }

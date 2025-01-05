@@ -2,12 +2,11 @@ package logic;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class HoughLineTransform {
 
-    public static void getLines(BufferedImage image) {
+    public static int[][] getLines(BufferedImage image) {
         int width = image.getWidth();
         int height = image.getHeight();
         AtomicInteger atom = new AtomicInteger(-1);
@@ -29,6 +28,7 @@ public class HoughLineTransform {
                 }
             }
         }
+        SaveImage.saveImage(graphImage, "graph");
         ArrayList<int[]> sortingArray = new ArrayList<>();
         for (int i = 0; i < coordinateSystemArray.length; i++) {
             for (int j = 0; j < coordinateSystemArray[i].length; j++) {
@@ -37,17 +37,57 @@ public class HoughLineTransform {
                 }
             }
         }
-        sortingArray.sort(Comparator.comparingInt(arr -> arr[0]));
-        for (int i = 1; i < 100; i++) {
-            int[] values = sortingArray.get(sortingArray.size() - i);
+        BufferedImage houghLineTransformImage = new BufferedImage(image.getWidth(), image.getHeight(),
+                BufferedImage.TYPE_INT_RGB);
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                houghLineTransformImage.setRGB(j, i, image.getRGB(j, i));
+            }
+        }
+        ArrayList<Integer> verticalLines = new ArrayList<>();
+        ArrayList<Integer> horizontalLines = new ArrayList<>();
+        sortingArray.sort((arr1, arr2) -> Integer.compare(arr2[0], arr1[0]));
+        for (int[] values : sortingArray) {
+            if (values[0] < sortingArray.get(0)[0] / 3) {
+                break;
+            }
             double rho = (double) values[2] / 100;
             int r = values[1];
             double m = -Math.cos(rho) / Math.sin(rho);
             double c = r / Math.sin(rho);
-            System.out.printf("%d %f %d %f %f\n", values[0], rho, r, m, c);
+            if (rho == 0 || m < 0.01 && m > -0.01) {
+                boolean isTooClose = false;
+                for (int verticalOrHorizontal : rho == 0 ? verticalLines : horizontalLines) {
+                    if (verticalOrHorizontal - 50 < r && verticalOrHorizontal + 50 > r) {
+                        isTooClose = true;
+                        break;
+                    }
+                }
+                if (isTooClose) {
+                    continue;
+                }
+                if (rho == 0) {
+                    verticalLines.add(r);
+                } else {
+                    horizontalLines.add((int) c);
+                }
+                for (int j = 0; j < (rho == 0 ? houghLineTransformImage.getHeight()
+                        : houghLineTransformImage.getWidth()); j++) {
+                    if (rho == 0) {
+                        houghLineTransformImage.setRGB(r, j, 0xFF0000);
+                    } else {
+                        int y = (int) (c + m * j);
+                        if (y >= houghLineTransformImage.getHeight() || y < 0) {
+                            continue;
+                        }
+                        houghLineTransformImage.setRGB(j, y, 0xFF0000);
+                    }
+                }
+            }
         }
-
-        SaveImage.saveImage(graphImage, "graph");
+        SaveImage.saveImage(houghLineTransformImage, "hough-line-transform");
+        return new int[][] { horizontalLines.stream().mapToInt(Integer::intValue).toArray(),
+                verticalLines.stream().mapToInt(Integer::intValue).toArray() };
     }
 
     private static void findHighestPoint(int x, int y, AtomicInteger atom) {
@@ -60,13 +100,12 @@ public class HoughLineTransform {
     }
 
     private static void plotOnArray(int x, int y, int[][] coordinateSystemArray, BufferedImage image) {
-
         for (int theta = 0; theta < 200 * Math.PI; theta++) {
             int r = (int) Math.round(x * Math.cos((double) theta / 100) + y * Math.sin((double) theta / 100));
             if (r < 0) {
                 continue;
             }
-            int newColor = (image.getRGB(theta, image.getHeight() - 1 - r) & 0xFF) + 3;
+            int newColor = (image.getRGB(theta, image.getHeight() - 1 - r) & 0xFF) + 1;
             if (newColor > 255) {
                 newColor = 255;
             }
