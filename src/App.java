@@ -18,7 +18,7 @@ public class App {
     public static void main(String[] args) {
         BufferedImage image = null;
         try {
-            image = ImageIO.read(new File("input1.png"));
+            image = ImageIO.read(new File("input/input1.png"));
         } catch (IOException e) {
         }
 

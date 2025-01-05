@@ -9,7 +9,7 @@ import javax.imageio.ImageIO;
 public class SaveImage {
     public static void saveImage(BufferedImage image, String fileName) {
         try {
-            ImageIO.write(image, "png", new File(fileName + ".png"));
+            ImageIO.write(image, "png", new File("output/" + fileName + ".png"));
         } catch (IOException e) {
         }
     }
