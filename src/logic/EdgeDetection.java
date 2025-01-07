@@ -23,15 +23,16 @@ public class EdgeDetection {
     public static final double PRESET_ALPHA = 0.3;
     public static final double PRESET_BETA = 0.5;
 
-    public static BufferedImage getThresholdGradient(BufferedImage image, int[][] filter, double alpha, double beta) {
+    public static BufferedImage getThresholdGradient(BufferedImage image, int[][] filter, double alpha, double beta,
+            boolean saveImage) {
         AtomicInteger maxGradient = new AtomicInteger(-1);
-        BufferedImage gradientImage = calculateGradientAndAngle(image, filter, null, maxGradient);
-        BufferedImage thresholdGradient = thresholdGradient(gradientImage, maxGradient, alpha, beta);
+        BufferedImage gradientImage = calculateGradientAndAngle(image, filter, null, maxGradient, saveImage);
+        BufferedImage thresholdGradient = thresholdGradient(gradientImage, maxGradient, alpha, beta, saveImage);
         return thresholdGradient;
     }
 
     private static BufferedImage calculateGradientAndAngle(BufferedImage image, int[][] filter, double[][] angleTable,
-            AtomicInteger maxGradient) {
+            AtomicInteger maxGradient, boolean saveImage) {
         int width = image.getWidth();
         int height = image.getHeight();
 
@@ -70,12 +71,12 @@ public class EdgeDetection {
                 angleTable[i][j] = angle;
             }
         }
-        SaveImage.saveImage(gradientImage, "gradient");
+        SaveImage.saveImage(gradientImage, "gradient", saveImage);
         return gradientImage;
     }
 
     private static BufferedImage thresholdGradient(BufferedImage image, AtomicInteger maxGradient, double alpha,
-            double beta) {
+            double beta, boolean saveImage) {
         int width = image.getWidth();
         int height = image.getHeight();
         BufferedImage thresholdGradient = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_GRAY);
@@ -88,24 +89,25 @@ public class EdgeDetection {
                 }
             }
         }
-        SaveImage.saveImage(thresholdGradient, "threshold-gradient");
+        SaveImage.saveImage(thresholdGradient, "threshold-gradient", saveImage);
         return thresholdGradient;
     }
 
     @Deprecated
-    public static BufferedImage getCannyEdge(BufferedImage image, int[][] filter, double alpha, double beta) {
+    public static BufferedImage getCannyEdge(BufferedImage image, int[][] filter, double alpha, double beta,
+            boolean saveImage) {
         int width = image.getWidth();
         int height = image.getHeight();
         double[][] angleTable = new double[height][width];
         AtomicInteger maxGradient = new AtomicInteger(-1);
-        BufferedImage gradientImage = calculateGradientAndAngle(image, filter, angleTable, maxGradient);
-        BufferedImage cannyEdge = makeCannyEdge(gradientImage, angleTable);
-        BufferedImage hysteresisThreshold = hysteresisThreshold(cannyEdge, maxGradient, alpha, beta);
+        BufferedImage gradientImage = calculateGradientAndAngle(image, filter, angleTable, maxGradient, saveImage);
+        BufferedImage cannyEdge = makeCannyEdge(gradientImage, angleTable, saveImage);
+        BufferedImage hysteresisThreshold = hysteresisThreshold(cannyEdge, maxGradient, alpha, beta, saveImage);
         return hysteresisThreshold;
     }
 
     @Deprecated
-    private static BufferedImage makeCannyEdge(BufferedImage image, double[][] angleTable) {
+    private static BufferedImage makeCannyEdge(BufferedImage image, double[][] angleTable, boolean saveImage) {
 
         int width = image.getWidth();
         int height = image.getHeight();
@@ -138,13 +140,13 @@ public class EdgeDetection {
                 }
             }
         }
-        SaveImage.saveImage(cannyEdge, "canny-edge");
+        SaveImage.saveImage(cannyEdge, "canny-edge", saveImage);
         return cannyEdge;
     }
 
     @Deprecated
     private static BufferedImage hysteresisThreshold(BufferedImage image, AtomicInteger maxGradient, double alpha,
-            double beta) {
+            double beta, boolean saveImage) {
         int width = image.getWidth();
         int height = image.getHeight();
         BufferedImage hysteresisThreshold = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_GRAY);
@@ -185,7 +187,7 @@ public class EdgeDetection {
                 hysteresisThreshold.setRGB(y, x, COLOR_BLACK);
             }
         }
-        SaveImage.saveImage(hysteresisThreshold, "hysteresis-threshold");
+        SaveImage.saveImage(hysteresisThreshold, "hysteresis-threshold", saveImage);
         return hysteresisThreshold;
     }
 }

@@ -27,7 +27,7 @@ public class GaussianFilter {
             { 0, 0, 1, 2, 1, 0, 0 },
     };
 
-    public static BufferedImage applyGaussianFilter(BufferedImage image, int[][] kernel) {
+    public static BufferedImage applyGaussianFilter(BufferedImage image, int[][] kernel, boolean saveImage) {
         int width = image.getWidth();
         int height = image.getHeight();
         int offset = kernel.length / 2;
@@ -53,7 +53,7 @@ public class GaussianFilter {
                 blurredImage.setRGB(j - offset, i - offset, gaussianPixel);
             }
         }
-        SaveImage.saveImage(blurredImage, "blurred");
+        SaveImage.saveImage(blurredImage, "blurred", saveImage);
         return blurredImage;
     }
 }

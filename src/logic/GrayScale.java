@@ -20,7 +20,7 @@ public class GrayScale {
 
     public static final GrayScaleFunction BLUE_CHANNEL_ONLY = (red, green, blue) -> blue;
 
-    public static BufferedImage applyGrayScale(BufferedImage image, GrayScaleFunction function) {
+    public static BufferedImage applyGrayScale(BufferedImage image, GrayScaleFunction function, boolean saveImage) {
         int width = image.getWidth();
         int height = image.getHeight();
         BufferedImage grayImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
@@ -35,7 +35,7 @@ public class GrayScale {
                 grayImage.setRGB(j, i, pixel);
             }
         }
-        SaveImage.saveImage(grayImage, "grayscale");
+        SaveImage.saveImage(grayImage, "grayscale", saveImage);
         return grayImage;
     }
 }

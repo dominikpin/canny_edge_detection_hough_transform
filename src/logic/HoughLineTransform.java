@@ -6,7 +6,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class HoughLineTransform {
 
-    public static int[][] getLines(BufferedImage image) {
+    public static int[][] getLines(BufferedImage image, boolean saveImage) {
         int width = image.getWidth();
         int height = image.getHeight();
         AtomicInteger atom = new AtomicInteger(-1);
@@ -28,7 +28,7 @@ public class HoughLineTransform {
                 }
             }
         }
-        SaveImage.saveImage(graphImage, "graph");
+        SaveImage.saveImage(graphImage, "graph", saveImage);
         ArrayList<int[]> sortingArray = new ArrayList<>();
         for (int i = 0; i < coordinateSystemArray.length; i++) {
             for (int j = 0; j < coordinateSystemArray[i].length; j++) {
@@ -58,7 +58,7 @@ public class HoughLineTransform {
             if (rho == 0 || m < 0.01 && m > -0.01) {
                 boolean isTooClose = false;
                 for (int verticalOrHorizontal : rho == 0 ? verticalLines : horizontalLines) {
-                    if (verticalOrHorizontal - 50 < r && verticalOrHorizontal + 50 > r) {
+                    if (verticalOrHorizontal - 20 < r && verticalOrHorizontal + 20 > r) {
                         isTooClose = true;
                         break;
                     }
@@ -85,7 +85,9 @@ public class HoughLineTransform {
                 }
             }
         }
-        SaveImage.saveImage(houghLineTransformImage, "hough-line-transform");
+        SaveImage.saveImage(houghLineTransformImage, "hough-line-transform", saveImage);
+        horizontalLines.sort((a, b) -> Integer.compare(a, b));
+        verticalLines.sort((a, b) -> Integer.compare(a, b));
         return new int[][] { horizontalLines.stream().mapToInt(Integer::intValue).toArray(),
                 verticalLines.stream().mapToInt(Integer::intValue).toArray() };
     }
