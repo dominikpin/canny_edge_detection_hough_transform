@@ -65,5 +65,21 @@ Here are the images generated step by step during the program’s execution:
 To run the program, you need to have the [Java Development Kit (JDK)](https://www.oracle.com/java/technologies/downloads/) installed on your computer. Once installed, follow these steps:
 
 1. **Compile the Program**: Open your terminal and run the following command:
-   ```bash
-   javac Main.java
+```bash
+javac Main.java
+```
+2. **Run the Program**:
+```bash
+java Main
+```
+
+To change scaling for faster but more inaccurate line detection or to change input, you can change the main function, save it, compile and run the program.
+
+## Authors
+
+- [@hampter-o7](https://www.github.com/hampter-o7)
+
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
