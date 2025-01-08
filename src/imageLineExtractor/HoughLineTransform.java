@@ -11,11 +11,23 @@ public class HoughLineTransform {
     private static int upDownLeftRight = 60;
 
     /**
+     * Extracts horizontal and vertical lines from a {@code BufferedImage}.
+     *
+     * This method processes an image to detect and extract the coordinates of
+     * horizontal and vertical lines. It maps all white pixels onto a polar
+     * coordinate
+     * system and identifies regions where lines converge. Only the most relevant
+     * horizontal and vertical lines are extracted.
      * 
-     * @param image
-     * @param scale
-     * @param saveImage
-     * @return
+     * @param image     The {@code BufferedImage} to be processed.
+     * @param scale     A {@code int} value specifying the scale factor for
+     *                  reducing the image size during processing. The scale must
+     *                  be 1 or greater.
+     * @param saveImage A {@code boolean} flag that determines whether the processed
+     *                  image should be saved.
+     * @return a 2D {@code int} array where:
+     *         - The first sub-array contains the coordinates of horizontal lines.
+     *         - The second sub-array contains the coordinates of vertical lines.
      */
     public static int[][] getLines(BufferedImage image, int scale, boolean saveImage) {
         upDownLeftRight /= scale;

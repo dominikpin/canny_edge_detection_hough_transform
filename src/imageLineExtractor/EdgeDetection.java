@@ -10,19 +10,74 @@ public class EdgeDetection {
     private static final int COLOR_WHITE = 0xFFFFFF;
     private static final int COLOR_BLACK = 0;
 
+    /**
+     * The Sobel operator kernel for edge detection.
+     *
+     * This 3x3 integer matrix represents the Sobel kernel used for image edge
+     * detection. It emphasizes horizontal or vertical edges by applying convolution
+     * to an image.
+     */
     public static final int[][] SOBEL = {
             { -1, 0, 1 },
             { -2, 0, 2 },
             { -1, 0, 1 }
     };
+
+    /**
+     * The Scharr operator kernel for edge detection.
+     *
+     * This 3x3 integer matrix represents the Scharr kernel, an alternative to the
+     * Sobel operator. It is designed to provide better gradient approximation,
+     * particularly in images with higher noise or smaller features.
+     */
     public static final int[][] SCHARR = {
             { -3, 0, 3 },
             { -10, 0, 10 },
             { -3, 0, 3 }
     };
+
+    /**
+     * The default upper threshold value for thresholding operations.
+     *
+     * This constant defines the preset upper threshold ({@code 0.3}) used in image
+     * processing tasks. Pixels with values above this threshold are typically
+     * classified as part of an edge or significant feature.
+     */
     public static final double PRESET_ALPHA = 0.3;
+
+    /**
+     * The default lower threshold value for thresholding operations.
+     *
+     * This constant defines the preset lower threshold ({@code 0.5}) used in image
+     * processing tasks. Pixels with values below this threshold are typically
+     * ignored or classified as background noise.
+     */
     public static final double PRESET_BETA = 0.5;
 
+    /**
+     * Converts a grayscaled {@code BufferedImage} to a thresholded gradient image.
+     * 
+     * This method computes the gradient of a grayscaled image using the specified
+     * filter and applies thresholding based on the provided alpha (upper threshold)
+     * and beta (lower threshold) values. Additionally, the method excludes very
+     * bright pixels (which correspond to symbols) to focus on relevant features.
+     * The result is a binary image highlighting edges or significant features based
+     * on the gradient and thresholding criteria.
+     *
+     * @param image     The {@code BufferedImage} to be processed.
+     * @param filter    The {@code int[][]} filter to be used for gradient
+     *                  calculation.
+     * @param alpha     The upper threshold value for the gradient. Pixels with a
+     *                  gradient value above this threshold are considered part of
+     *                  the significant features.
+     * @param beta      The lower threshold value for the gradient. Pixels with a
+     *                  gradient value below this threshold are ignored or
+     *                  considered as background.
+     * @param saveImage A {@code boolean} flag that determines whether the processed
+     *                  image should be saved.
+     * @return A binary {@code BufferedImage} that has been thresholded based on the
+     *         gradient.
+     */
     public static BufferedImage getThresholdGradient(BufferedImage image, int[][] filter, double alpha, double beta,
             boolean saveImage) {
         AtomicInteger maxGradient = new AtomicInteger(-1);
@@ -93,6 +148,32 @@ public class EdgeDetection {
         return thresholdGradient;
     }
 
+    /**
+     * Converts a grayscaled {@code BufferedImage} to a Canny edge image.
+     * 
+     * This method applies a gradient calculation and thresholds the image using the
+     * Canny edge detection algorithm, based on the provided filter and threshold
+     * values (alpha and beta). The result is a binary image highlighting the edges
+     * of significant features. Note that this function is deprecated, and it is
+     * recommended to use the {@link #getThresholdGradient} method for a more
+     * efficient implementation.
+     *
+     * @param image     The {@code BufferedImage} to be processed.
+     * @param filter    The {@code int[][]} filter to be used for gradient
+     *                  calculation.
+     * @param alpha     The upper threshold value for the gradient. Pixels with a
+     *                  gradient value above this threshold are considered part of
+     *                  the significant features.
+     * @param beta      The lower threshold value for the gradient. Pixels with a
+     *                  gradient value below this threshold are ignored or
+     *                  considered as background.
+     * @param saveImage A {@code boolean} flag that determines whether the processed
+     *                  image should be saved.
+     * @return A binary {@code BufferedImage} that has been thresholded based on the
+     *         gradient.
+     * @deprecated Use {@link #getThresholdGradient} instead for improved
+     *             performance.
+     */
     @Deprecated
     public static BufferedImage getCannyEdge(BufferedImage image, int[][] filter, double alpha, double beta,
             boolean saveImage) {

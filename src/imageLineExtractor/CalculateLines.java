@@ -33,7 +33,7 @@ public class CalculateLines {
 	 *                   be 1 or greater.
 	 * @param saveImages A {@code boolean} flag indicating whether intermediate
 	 *                   images generated during processing should be saved.
-	 * @return A 2D {@code int} array where:
+	 * @return a 2D {@code int} array where:
 	 *         - The first sub-array contains the coordinates of horizontal lines.
 	 *         - The second sub-array contains the coordinates of vertical lines.
 	 * @throws IOException If an I/O error occurs while reading the image.

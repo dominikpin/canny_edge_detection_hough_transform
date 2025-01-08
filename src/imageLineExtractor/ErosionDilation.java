@@ -7,6 +7,21 @@ public class ErosionDilation {
     private static final int COLOR_BLACK = 0xFF000000;
     private static final int COLOR_WHITE = 0xFFFFFFFF;
 
+    /**
+     * Enhances relevant features from a thresholded gradient {@code BufferedImage}.
+     * 
+     * This method applies morphological operations, such as erosion and dilation,
+     * to a thresholded gradient image. These operations help refine and enhance
+     * the edges or significant features, making them more prominent for further
+     * analysis or processing. The result is a binary image where features have been
+     * enhanced through morphological transformations.
+     *
+     * @param image     The {@code BufferedImage} to be processed.
+     * @param saveImage A {@code boolean} flag that determines whether the processed
+     *                  image should be saved.
+     * @return a binary {@code BufferedImage} that has been eroded and dilated to
+     *         enhance relevant features.
+     */
     public static BufferedImage erosionAndDilation(BufferedImage image, boolean saveImage) {
         int height = image.getHeight();
         int width = image.getWidth();
