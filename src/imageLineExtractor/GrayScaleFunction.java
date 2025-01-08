@@ -1,4 +1,4 @@
-package logic;
+package imageLineExtractor;
 
 @FunctionalInterface
 public interface GrayScaleFunction {
