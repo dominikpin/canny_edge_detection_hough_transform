@@ -7,6 +7,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class SaveImage {
+
     /**
      * Saves a {@code BufferedImage} to the specified file if saving is enabled.
      *

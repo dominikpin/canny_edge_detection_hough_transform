@@ -38,7 +38,6 @@ public class CalculateLines {
 	 *         - The second sub-array contains the coordinates of vertical lines.
 	 * @throws IOException If an I/O error occurs while reading the image.
 	 */
-
 	public static int[][] calculateLines(String pathname, int scale, boolean saveImages) throws IOException {
 
 		BufferedImage image = ImageIO.read(new File(pathname));
@@ -57,9 +56,9 @@ public class CalculateLines {
 		BufferedImage thresholdGradientImage = EdgeDetection.getThresholdGradient(blurredImage, EdgeDetection.SOBEL,
 				EdgeDetection.PRESET_ALPHA, EdgeDetection.PRESET_BETA, saveImages);
 
-		BufferedImage eroded = ErosionDilation.erosionAndDilation(thresholdGradientImage, saveImages);
+		BufferedImage erodedAndDilated = ErosionDilation.erosionAndDilation(thresholdGradientImage, saveImages);
 
-		int[][] linesCoords = HoughLineTransform.getLines(eroded, scale, saveImages);
+		int[][] linesCoords = HoughLineTransform.getLines(erodedAndDilated, scale, saveImages);
 		for (int[] lines : linesCoords) {
 			for (int i = 0; i < lines.length; i++) {
 				lines[i] *= scale;

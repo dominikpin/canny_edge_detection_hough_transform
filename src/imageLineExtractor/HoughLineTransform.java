@@ -15,9 +15,8 @@ public class HoughLineTransform {
      *
      * This method processes an image to detect and extract the coordinates of
      * horizontal and vertical lines. It maps all white pixels onto a polar
-     * coordinate
-     * system and identifies regions where lines converge. Only the most relevant
-     * horizontal and vertical lines are extracted.
+     * coordinate system and identifies regions where lines converge. Only the most
+     * relevant horizontal and vertical lines are extracted.
      * 
      * @param image     The {@code BufferedImage} to be processed.
      * @param scale     A {@code int} value specifying the scale factor for

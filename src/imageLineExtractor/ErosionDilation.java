@@ -55,7 +55,7 @@ public class ErosionDilation {
                 }
             }
         }
-        SaveImage.saveImage(dilate, "dilate", saveImage);
+        SaveImage.saveImage(dilate, "dilated", saveImage);
         return dilate;
     }
 }
