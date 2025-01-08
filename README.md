@@ -75,6 +75,11 @@ java Main
 
 To change scaling for faster but more inaccurate line detection or to change input, you can change the main function, save it, compile and run the program.
 
+## Usage in Other Programs
+
+If you want to use the functions from this project in other programs, you can download the compiled `.jar` file. Once downloaded, you can include it as a dependency in your project and call the available functions as needed.
+
+
 ## Authors
 
 - [@hampter-o7](https://www.github.com/hampter-o7)
