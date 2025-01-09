@@ -80,7 +80,7 @@ public class GrayScale {
      *                  conversion logic.
      * @param saveImage A {@code boolean} flag that determines whether the processed
      *                  image should be saved.
-     * @return A {@code BufferedImage} where all pixels have been converted to
+     * @return a {@code BufferedImage} where all pixels have been converted to
      *         grayscale.
      */
     public static BufferedImage applyGrayScale(BufferedImage image, GrayScaleFunction function, boolean saveImage) {

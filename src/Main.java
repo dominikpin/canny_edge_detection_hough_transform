@@ -24,6 +24,7 @@ public class Main {
             System.out.println();
         }
         SaveImage.saveImage(image, "output", true);
+        System.out.println(CalculateLines.getSquareSize(linesCoords));
         final long endTime = System.currentTimeMillis();
         System.out.println("Total execution time: " + ((float) (endTime - startTime)) / 1000);
     }

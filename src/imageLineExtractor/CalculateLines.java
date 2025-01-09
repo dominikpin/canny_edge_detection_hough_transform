@@ -5,6 +5,7 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -65,5 +66,30 @@ public class CalculateLines {
 			}
 		}
 		return linesCoords;
+	}
+
+	/**
+	 * Calculates the median square size based on the differences between line
+	 * coordinates.
+	 * 
+	 * This method takes a 2D array of vertical and horizontal line coordinates,
+	 * computes the differences between consecutive lines, and determines the median
+	 * square size. The result represents the most common spacing or size of squares
+	 * formed by the grid of lines.
+	 * 
+	 * @param linesCoords A 2D {@code int} array containing the coordinates of
+	 *                    vertical and horizontal lines.
+	 * @return the median size of squares extracted from the differences between the
+	 *         lines.
+	 */
+	public static int getSquareSize(int[][] linesCoords) {
+		ArrayList<Integer> linesDifferences = new ArrayList<>();
+		for (int i = 0; i < 2; i++) {
+			for (int j = 0; j < linesCoords[i].length - 1; j++) {
+				linesDifferences.add(linesCoords[i][j + 1] - linesCoords[i][j]);
+			}
+		}
+		linesDifferences.sort((a, b) -> Integer.compare(a, b));
+		return linesDifferences.get(linesDifferences.size() / 2);
 	}
 }

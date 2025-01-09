@@ -75,7 +75,7 @@ public class EdgeDetection {
      *                  considered as background.
      * @param saveImage A {@code boolean} flag that determines whether the processed
      *                  image should be saved.
-     * @return A binary {@code BufferedImage} that has been thresholded based on the
+     * @return a binary {@code BufferedImage} that has been thresholded based on the
      *         gradient.
      */
     public static BufferedImage getThresholdGradient(BufferedImage image, int[][] filter, double alpha, double beta,
@@ -169,7 +169,7 @@ public class EdgeDetection {
      *                  considered as background.
      * @param saveImage A {@code boolean} flag that determines whether the processed
      *                  image should be saved.
-     * @return A binary {@code BufferedImage} that has been thresholded based on the
+     * @return a binary {@code BufferedImage} that has been thresholded based on the
      *         gradient.
      * @deprecated Use {@link #getThresholdGradient} instead for improved
      *             performance.
