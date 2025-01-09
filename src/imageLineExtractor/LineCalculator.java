@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-public class CalculateLines {
+public class LineCalculator {
 
 	/**
 	 * The default scale factor for image processing.
