@@ -3,11 +3,7 @@ package imageLineExtractor;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
 
 public class LineCalculator {
 
@@ -37,11 +33,8 @@ public class LineCalculator {
 	 * @return a 2D {@code int} array where:
 	 *         - The first sub-array contains the coordinates of horizontal lines.
 	 *         - The second sub-array contains the coordinates of vertical lines.
-	 * @throws IOException If an I/O error occurs while reading the image.
 	 */
-	public static int[][] calculateLines(String pathname, int scale, boolean saveImages) throws IOException {
-
-		BufferedImage image = ImageIO.read(new File(pathname));
+	public static int[][] calculateLines(BufferedImage image, int scale, boolean saveImages) {
 
 		BufferedImage scaledImage = new BufferedImage((image.getWidth() / scale), (image.getHeight() / scale),
 				BufferedImage.TYPE_INT_ARGB);

@@ -11,8 +11,8 @@ public class Main {
     public static void main(String[] args) throws IOException {
         final long startTime = System.currentTimeMillis();
         String input = "input/input1.png";
-        int[][] linesCoords = LineCalculator.calculateLines(input, 1, true);
         BufferedImage image = ImageIO.read(new File(input));
+        int[][] linesCoords = LineCalculator.calculateLines(image, 1, true);
         for (int i = 0; i < 2; i++) {
             System.out.print((i == 0 ? "horizontal" : "vertical") + "lines: ");
             for (int line : linesCoords[i]) {
